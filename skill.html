@@ -8,11 +8,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="https://use.fontawesome.com/8754a9ba67.js"></script>
 
     <style type="text/css">
       .card{
         margin-bottom: 20px;
+      }
+      #count{
+        font-size: 14px;
       }
     </style>
   </head>
@@ -41,7 +43,7 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>
@@ -50,9 +52,13 @@
   <br>
   <div class="card card-inverse" style="background-color: #333; border-color: #333;">
     <div class="card-block">
-        <h3 class="card-title" style="font-size: 45px;">PHP</h3>
+        <h3 class="card-title" style="font-size: 50px;">PHP</h3>
+        <span class="badge badge-success" id="count">Projects: 2</span> &nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="badge badge-success" id="count">Students: 4</span>
+        <hr>
         <p class="card-text">PHP (recursive acronym for PHP: Hypertext Preprocessor) is a widely-used open source general-purpose scripting language that is especially suited for web development and can be embedded into HTML</p>
-        <a href="http://php.net" class="btn btn-primary btn-sm" target="blank">Ofiicial Website</a>  
+        <a href="http://php.net" class="btn btn-primary btn-sm" target="blank">Official Website</a><br>
+          
     </div>
   </div>
 
@@ -86,8 +92,83 @@
   <div class="col">
 
   </div>
+</div><!--The row ends-->
+<br>
 
+<!--The learning resources -->
+<div class="card" style="background-color: #eaeaea; border-color: #eaeaea;">
+    <div class="card-block">
+        <h3 class="card-title" style="font-size: 30px;">Learning Resources</h3>
+        <p class="card-text">
+          <ul class="list-group list-group-flush">
+            <a href="https://www.w3schools.com/php/"><li class="list-group-item">https://www.w3schools.com/php</li></a>
+            <a href="https://www.codecademy.com/learn/php"><li class="list-group-item">https://www.codecademy.com/learn/php</li></a>
+            <a href="files/php_tutorial.pdf"><li class="list-group-item">Tutorials Point PDF</li></a>
+          </ul>
+        </p>  
+    </div>
 </div>
+
+<br>
+<!--The discussions -->
+<div class="card" style="background-color: #eaeaea; border-color: #eaeaea;">
+    <div class="card-block">
+        <h3 class="card-title" style="font-size: 30px;">Discussion</h3>
+        <p class="card-text">
+
+          <ul class="list-group list-group-flush">
+
+            <li class="list-group-item" style="display: block;">
+              <div class="question" style="background-color: #333; color: #eaeaea; padding: 7px;">Why should I learn PHP? &nbsp;&nbsp;
+              <span class="badge badge-success" style="font-size: 14px;"><a href="profile.html" style="color: white;">Ronald Weasley</a></span></div>
+              
+              
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="display: block;" style="background-color: blue;">
+                  <div class="answer" style=" background-color: #E0E0E0; color: black; padding: 7px;">Because it's easy bruh! &nbsp;&nbsp;
+                    <span class="badge badge-success" style="font-size: 14px;">
+                      <a href="profile.html" style="color: white;">Tom Marvalo Riddle</a>
+                    </span>
+                </div>
+                
+                </li>
+                <li class="list-group-item" style="display: block;">
+                  <div class="answer" style="background-color: #E0E0E0; color: black; padding: 7px;">Do you have any other option :-\  &nbsp;&nbsp;
+                  <span class="badge badge-success" style="font-size: 14px;">
+                      <a href="profile.html" style="color: white;">
+              Jon Snow</a></span></div>
+                </li>
+              </ul>
+            </li>
+
+            <li class="list-group-item" style="display: block;">
+              <div class="question" style="background-color: #333; color: #eaeaea; padding: 7px;">What are some good PHP frameworks?  &nbsp;&nbsp;
+              <span class="badge badge-success" style="font-size: 14px;"><a href="profile.html" style="color: white;">Knight King</a></span></div>
+              
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="display: block;" style="background-color: blue;">
+                  <div class="answer" style="background-color: #E0E0E0; color: black; padding: 7px;">
+                  Laravel is the best thing I've ever seen in PHP world. It's simple and small yet extremely powerful. I went through the code in a couple of days and know the framework from inside out.<br>
+
+Being built for PHP 5.3 provides you with so much nice features, and in general less PHP peculiarities.<br>
+
+I have used CI for a couple of years but for a new big project I started searching for a new framework some months ago, I was not content with the ORM (which isn't there) and wanted something new, built on new technologies. There is a nice overview on Wikipedia and I looked at FuelPHP, Yii, CakePHP and Symfony. I was about to settle for Fuel but then stumbles across Laravel. I was immediately sold by it's expressive syntax and ORM capabilities, but also the simple template engine Blade and Post-Redirect-Get.  &nbsp;&nbsp;
+              <span class="badge badge-success" style="font-size: 14px;"><a href="profile.html" style="color: white;">The KingSlayer</a></span></div>
+                  
+                </li>
+                <li class="list-group-item" style="display: block;">
+                  <div class="answer" style="background-color: #E0E0E0; color: black; padding: 7px;">Do you have any other option :-\  &nbsp;&nbsp;
+              <span class="badge badge-success" style="font-size: 14px;"><a href="profile.html" style="color: white;">Ronald Weasley</a></span></div>
+                
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </p>  
+    </div>
+</div>
+
+
 
 </div><!-- main Container ends here-->
 
