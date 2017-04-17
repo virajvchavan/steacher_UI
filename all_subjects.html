@@ -21,7 +21,7 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">Steacher</a>
+  <a class="navbar-brand" href="index.html">Steacher</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -39,6 +39,12 @@
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="all_subjects.html">Subjects <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="logout_button">Logout(<span id="user_name"></span>)</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-success" id="login_button">Login</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -95,8 +101,24 @@
 
 </div><!-- main Container ends here-->
 
-    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+      <script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDFco803Sl99ik8a3RHY3t6KzbFgiF47vc",
+        authDomain: "steacher-f7450.firebaseapp.com",
+        databaseURL: "https://steacher-f7450.firebaseio.com",
+        projectId: "steacher-f7450",
+        storageBucket: "steacher-f7450.appspot.com",
+        messagingSenderId: "801759175550"
+      };
+      firebase.initializeApp(config);
+    </script>
     <script src="js/jquery-3.1.1.slim.min.js"></script>
+    <script src="js/login.js" type="text/javascript"></script>
+    <script src="js/subject.js" type="text/javascript"></script>
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="js/tether.min.js"></script>
     <script src="js/bootstrap.min.js"</script>
   </body>

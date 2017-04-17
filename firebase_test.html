@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fakt test kartoy bhava!</title>
+</head>
+<body>
+	<h1 id="bigOne"></h1>
+
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyAXMenpP5EOazyzZc8qvOpgAqb-ORnrr44",
+	    authDomain: "test-first-f7907.firebaseapp.com",
+	    databaseURL: "https://test-first-f7907.firebaseio.com",
+	    projectId: "test-first-f7907",
+	    storageBucket: "test-first-f7907.appspot.com",
+	    messagingSenderId: "870990478462"
+	  };
+	  firebase.initializeApp(config);
+
+	  var bigOne = document.getElementByID('bigOne');
+	  var dbRef = firebase.database().ref().child('text');
+	  dbRef.on('value', snap => bigOne.innerText = snap.val());
+
+	  bigOne.innerText = "Some";
+	</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login | Steacher</title>
+</head>
+	
+ <script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDFco803Sl99ik8a3RHY3t6KzbFgiF47vc",
+        authDomain: "steacher-f7450.firebaseapp.com",
+        databaseURL: "https://steacher-f7450.firebaseio.com",
+        projectId: "steacher-f7450",
+        storageBucket: "steacher-f7450.appspot.com",
+        messagingSenderId: "801759175550"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+<!--Uses the firebase auth UI -->
+<script src="https://cdn.firebase.com/libs/firebaseui/1.0.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.1/firebaseui.css" />
+    <script type="text/javascript">
+      // FirebaseUI config.
+      var uiConfig = {
+        signInSuccessUrl: 'index.html',
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        tosUrl: '<your-tos-url>'
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+
+
+
+<body>
+	<h2 align="center">Login / Register</h2>
+	<div id="firebaseui-auth-container"></div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+</body>
+</html>
