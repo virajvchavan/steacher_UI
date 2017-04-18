@@ -1,18 +1,14 @@
 //only the basic data of logged in user
 var name, email, photoUrl, emailVerified;
-var uid;
+var uid = "xoVFEPDXZjXwGsn4TKajWlVQmDz2";
+userRef = firebase.database().ref().child("users").child(uid);
 firebase.auth().onAuthStateChanged(function(user){
 		if(user){
 			  name = user.displayName;
 			  email = user.email;
 			  photoUrl = user.photoURL;
 			  emailVerified = user.emailVerified;
-			  uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-			                   // this value to authenticate with your backend server, if
-			                   // you have one. Use User.getToken() instead.
-
-
-			  userRef = firebase.database().ref().child("users").child(uid);
+			  uid = user.uid; 
 
 
 		$("#user_display_name").append(name);
@@ -48,5 +44,69 @@ firebase.auth().onAuthStateChanged(function(user){
 		});
 				}
 			});
+
+//show the user skills
+userRef.child("skills").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var user_skill_id = child_snapshot.val();
+					var user_skill_name = child_snapshot.key;
+            
+                    $("#skills_list").append("<a href=skill.html?id="+ user_skill_id +"><li class='list-group-item'>"+ user_skill_name +"</li></a>");
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
+//show the user subjects
+userRef.child("subjects").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var user_subject_id = child_snapshot.val();
+					var user_subject_name = child_snapshot.key;
+            
+                    $("#subjects_list").append("<a href=subject.html?id="+ user_subject_id +"><li class='list-group-item'>"+ user_subject_name +"</li></a>");
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
+//show the user projects
+userRef.child("projects").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var user_project_id = child_snapshot.val();
+					var user_project_name = child_snapshot.key;
+            
+                    $("#projects_list").append("<a href=project.html?id="+ user_project_id +"><li class='list-group-item'>"+ user_project_name +"</li></a>");
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
+//show the user achievements
+userRef.child("achievements").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var user_achievement_name = child_snapshot.val();
+            
+                    $("#achievements_list").append("<li class='list-group-item'>"+ user_achievement_name +"</li>");
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
+//show the user extra cur activities
+userRef.child("extra").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var user_achievement_name = child_snapshot.val();
+            
+                    $("#extra_cur_list").append("<li class='list-group-item'>"+ user_achievement_name +"</li>");
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
 
 
