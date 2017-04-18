@@ -1,10 +1,27 @@
-//var subject_id = "-Khwz2REfnNP1GudT8ZR";
 var subject_id = getQueryVariable("id");
-var subjectRef = firebase.database().ref().child("subjects").child(subject_id);
+if(!subject_id)
+{
+    $("body").html("<div style='text-align: center; padding: 50px;'><h1>Error 404</h1><br><h6>And you are lost!</h6></div>");
+}
+var subjectsRef = firebase.database().ref().child("subjects");
+
+subjectsRef.once("value", snap =>{
+    if(snap.hasChild(subject_id))
+    {
+        console.log("Child aahe");
+    }
+    else
+    {
+        $("body").html("<div style='text-align: center; padding: 50px;'><h1>Error 404</h1><br><h6>And you are lost!</h6></div>");
+    }
+});
+
+
+var subjectRef = subjectsRef.child(subject_id);
 
 subjectRef.once("value", snap =>{
     console.log(snap.val());
-    $("#subject_name").append(snap.child("name").val());
+    $("#subject_name, #page_title").prepend(snap.child("name").val());
     $("#subject_description").append(snap.child("description").val());
     $("#students_count").append("Students: " + snap.child("users").numChildren());
     snap.child("department").forEach(function(child_snapshot)

@@ -1,17 +1,24 @@
-//only the basic data of logged in user
-var name, email, photoUrl, emailVerified;
-var uid = "xoVFEPDXZjXwGsn4TKajWlVQmDz2";
-userRef = firebase.database().ref().child("users").child(uid);
+var uid = getQueryVariable("id");
+var usersRef = firebase.database().ref().child("users");
+
+if(!uid)
+{
+    $("body").html("<div style='text-align: center; padding: 50px;'><h1>Error 404</h1><br><h6>And you are lost!</h6></div>");
+}
+
+usersRef.once("value", snap =>{
+    if(snap.hasChild(uid))
+    {
+        console.log("Child aahe");
+    }
+    else
+    {
+        $("body").html("<div style='text-align: center; padding: 50px;'><h1>Error 404</h1><br><h6>And you are lost!</h6></div>");
+    }
+});
+
+userRef = usersRef.child(uid);
 firebase.auth().onAuthStateChanged(function(user){
-		if(user){
-			  name = user.displayName;
-			  email = user.email;
-			  photoUrl = user.photoURL;
-			  emailVerified = user.emailVerified;
-			  uid = user.uid; 
-
-
-		$("#user_display_name").append(name);
 
 		userRef.once("value", snap => {
 			var user_class = snap.child("class").val();
@@ -28,10 +35,13 @@ firebase.auth().onAuthStateChanged(function(user){
 			});
 			var num_projects = snap.child("projects").numChildren();
 			var num_skills = snap.child("skills").numChildren();
+			var user_name = snap.child("name").val();
+			var user_email = snap.child("email").val();
 
 			$("#num_projects").append(num_projects);
 			$("#num_skills").append(num_skills);
-			$("#user_email").append(email);
+			$("#user_email").append(user_email);
+			$("#user_display_name, #page_title").prepend(user_name);
 
 			var user_skills = snap.child("skills").val();
 			var user_subjects = snap.child("subjects").val();
@@ -42,7 +52,6 @@ firebase.auth().onAuthStateChanged(function(user){
 			$("#user_class").append(user_class);
 			
 		});
-				}
 			});
 
 //show the user skills

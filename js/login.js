@@ -3,7 +3,9 @@ firebase.auth().onAuthStateChanged(function(user){
 			$("#user_name").append(user.displayName);
 			$("#logout_button").show();
 			$("#login_button").hide();
+			$("#profile_link").attr("href","profile.html?id="+user.uid);
 		}else{
+			$("#profile_link").remove();
 			$("#logout_button").hide();
 			$("#login_button").show();
 		}
