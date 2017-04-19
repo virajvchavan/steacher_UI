@@ -8,26 +8,40 @@ firebase.auth().onAuthStateChanged(function(user){
 	        console.log("Child aahe")
 	        window.location = "profile.html?id="+user.uid;
 	    }
-	    else
-	    {
+	    $("#full_name").val(user.displayName);
+
+	    $("#btnSubmit").click(function(){
+	    	var user_class = $("#select_year").val();
+	    	var user_dept = $("#select_depts").val();
+	    	var user_dept_id = $("#select_depts").attr("id");
 	    	
-	    }
+	    	writeBasicUserData(user.uid, user.displayName, user_class, user_dept, user_dept_id);
+	    });
 	});
 });
 
-var deptsRef = firebase.database().ref().child("departments");
+var rootRef = firebase.database().ref();
+var deptsRef = rootRef.child("departments");
 
-//show the projects
+//show the deoartments in select
 deptsRef.once("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var id = child_snapshot.key;
 					var name = child_snapshot.child("name").val();
         
-                    console.log(name + id);
-            
             		$("#select_depts").append("<option id='"+ id +"'>"+ name +"</option>")
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
 });
+
+function writeBasicUserData(uid,name,user_class, depar, departKey) {
+  			var ref=firebase.database().ref('users/'+uid).set({
+  				name: name,
+  				class: user_class,
+  		    	department:{
+  		    		[departKey]: depar
+  		    	}
+  		     });
+  		}

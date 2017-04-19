@@ -1,5 +1,40 @@
-var uid = getQueryVariable("id");
-var usersRef = firebase.database().ref().child("users");
+firebase.auth().onAuthStateChanged(function(user){
+		if(user){
+			$("#user_name").append(user.displayName);
+			$("#logout_button").show();
+			$("#login_button").hide();
+			$("#profile_link").attr("href","profile.html?id="+user.uid);
+		}else{
+			$("#profile_link").remove();
+			$("#logout_button").hide();
+			$("#login_button").show();
+		}
+	});
+
+	$("#logout_button").click(function(){
+		firebase.auth().signOut();
+		window.location = "index.html";
+	});
+
+	$("#login_button").click(function(){
+		window.location = "login.html";
+	});
+    
+
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+}
+
+var uid  = getQueryVariable("id");
+var rootRef = firebase.database().ref();
+var usersRef = rootRef.child("users");
 
 if(!uid)
 {
@@ -30,7 +65,7 @@ firebase.auth().onAuthStateChanged(function(user){
 					var user_dept_name = child_snapshot.val();
 
 					$("#user_dept").append(user_dept_name);
-					$("#user_dept").attr("href", "dep.html?id="+ user_dept_id);
+					$("#user_dept").attr("href", "dept.html?id="+ user_dept_id);
 				});
 			});
 			var num_projects = snap.child("projects").numChildren();
@@ -112,6 +147,32 @@ userRef.child("extra").once("value", snap =>{
 					var user_achievement_name = child_snapshot.val();
             
                     $("#extra_cur_list").append("<li class='list-group-item'>"+ user_achievement_name +"</li>");
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
+//show the skills in select
+rootRef.child("skills").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var id = child_snapshot.key;
+					var name = child_snapshot.child("name").val();
+        
+            		$("#select_skills, #select_skills_for_project").append("<option id='"+ id +"'>"+ name +"</option>")
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+				});
+});
+
+//show the subjects in select
+rootRef.child("subjects").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+					var id = child_snapshot.key;
+					var name = child_snapshot.child("name").val();
+        
+            		$("#select_subjects").append("<option id='"+ id +"'>"+ name +"</option>")
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
