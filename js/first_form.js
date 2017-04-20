@@ -38,11 +38,19 @@ deptsRef.once("value", snap =>{
 });
 
 function writeBasicUserData(uid,name,user_class, depar, departKey) {
-  			var ref=firebase.database().ref('users/'+uid).set({
+	//1. add the user details in users
+	//2. add the user in the department
+
+  			firebase.database().ref('users/'+uid).set({
   				name: name,
   				class: user_class,
   		    	department:{
   		    		[departKey]: depar
   		    	}
   		     });
+
+  			deptsRef.child(departKey).child("users").update({
+				[name]: uid
+			});
+
   		}

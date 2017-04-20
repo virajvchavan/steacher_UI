@@ -1,26 +1,3 @@
-firebase.auth().onAuthStateChanged(function(user){
-		if(user){
-			$("#user_name").append(user.displayName);
-			$("#logout_button").show();
-			$("#login_button").hide();
-			$("#profile_link").attr("href","profile.html?id="+user.uid);
-		}else{
-			$("#profile_link").remove();
-			$("#logout_button").hide();
-			$("#login_button").show();
-		}
-	});
-
-	$("#logout_button").click(function(){
-		firebase.auth().signOut();
-		window.location = "index.html";
-	});
-
-	$("#login_button").click(function(){
-		window.location = "login.html";
-	});
-    
-
 function getQueryVariable(variable) {
   var query = window.location.search.substring(1);
   var vars = query.split("&");
@@ -33,6 +10,38 @@ function getQueryVariable(variable) {
 }
 
 var uid  = getQueryVariable("id");
+
+firebase.auth().onAuthStateChanged(function(user){
+		if(user){
+			$("#user_name").text(user.displayName);
+			$("#logout_button").show();
+			$("#login_button").hide();
+			$("#profile_link").attr("href","profile.html?id="+user.uid);
+
+			if(uid != user.uid)
+			{
+				$(".profile_buttons").hide();
+			}
+		}else{
+			$("#profile_link").remove();
+			$("#logout_button").hide();
+			$("#login_button").show();
+			$(".profile_buttons").hide();
+		}
+
+	});
+
+	$("#logout_button").click(function(){
+		firebase.auth().signOut();
+		window.location = "index.html";
+	});
+
+	$("#login_button").click(function(){
+		window.location = "login.html";
+	});
+    
+
+
 var rootRef = firebase.database().ref();
 var usersRef = rootRef.child("users");
 
@@ -55,7 +64,7 @@ usersRef.once("value", snap =>{
 userRef = usersRef.child(uid);
 firebase.auth().onAuthStateChanged(function(user){
 
-		userRef.once("value", snap => {
+		userRef.on("value", snap => {
 			var user_class = snap.child("class").val();
 			userRef.child("department").once("value", snap_dept => {
 				
@@ -64,7 +73,7 @@ firebase.auth().onAuthStateChanged(function(user){
 					var user_dept_id = child_snapshot.key;
 					var user_dept_name = child_snapshot.val();
 
-					$("#user_dept").append(user_dept_name);
+					$("#user_dept").text(user_dept_name);
 					$("#user_dept").attr("href", "dept.html?id="+ user_dept_id);
 				});
 			});
@@ -73,10 +82,10 @@ firebase.auth().onAuthStateChanged(function(user){
 			var user_name = snap.child("name").val();
 			var user_email = snap.child("email").val();
 
-			$("#num_projects").append(num_projects);
-			$("#num_skills").append(num_skills);
-			$("#user_email").append(user_email);
-			$("#user_display_name, #page_title").prepend(user_name);
+			$("#num_projects").text("Projects: " + num_projects);
+			$("#num_skills").text("Skills: " + num_skills);
+			$("#user_email").text(user_email);
+			$("#user_display_name, #page_title").text(user_name);
 
 			var user_skills = snap.child("skills").val();
 			var user_subjects = snap.child("subjects").val();
@@ -84,7 +93,7 @@ firebase.auth().onAuthStateChanged(function(user){
 
 			//console.log(user_dept + user_skills + user_subjects);
 
-			$("#user_class").append(user_class);
+			$("#user_class").text(user_class);
 			
 		});
 			});
@@ -105,7 +114,7 @@ userRef.child("skills").once("value", snap =>{
 });
 
 //show the user subjects
-userRef.child("subjects").once("value", snap =>{
+userRef.child("subjects").on("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_subject_id = child_snapshot.val();
@@ -120,7 +129,7 @@ userRef.child("subjects").once("value", snap =>{
 });
 
 //show the user projects
-userRef.child("projects").once("value", snap =>{
+userRef.child("projects").on("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_project_id = child_snapshot.val();
@@ -133,7 +142,7 @@ userRef.child("projects").once("value", snap =>{
 });
 
 //show the user achievements
-userRef.child("achievements").once("value", snap =>{
+userRef.child("achievements").on("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_achievement_name = child_snapshot.val();
@@ -145,7 +154,7 @@ userRef.child("achievements").once("value", snap =>{
 });
 
 //show the user extra cur activities
-userRef.child("extra").once("value", snap =>{
+userRef.child("extra").on("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_achievement_name = child_snapshot.val();
@@ -184,10 +193,30 @@ rootRef.child("subjects").once("value", snap =>{
 
 //adding skills through modal form
 $("#submitSkillsBtn").click(function(){
+
+	//1. add skill to the logged in user
+	//2. add logged in user to the skill
+
 	var new_skill = $("#select_skills").val();
 	var new_skill_id= $("#select_skills").children(":selected").attr("id");
 
-	$("#skills_modal").append(" <a href=skill.html?id="+ new_skill_id +"><span class='badge badge-success'>"+ new_skill +"</span></a> ");
+	firebase.auth().onAuthStateChanged(function(user){
+
+	//add skill to the user
+	usersRef.child(user.uid).child("skills").update({
+  				[new_skill]: new_skill_id
+  		     });
+
+	//add user to the skill
+	rootRef.child("skills").child(new_skill_id).child("users").update({
+		[user.displayName]: user.uid
+	});
+
+	});
+
+	$("#skills_list").append("<a href=skill.html?id="+ new_skill_id +"><li class='list-group-item'>"+ new_skill +"</li></a>");
+
+    $("#skills_modal").append(" <a href=skill.html?id="+ new_skill_id +"><span class='badge badge-success'>"+ new_skill +"</span></a> ");
 
 });
 
