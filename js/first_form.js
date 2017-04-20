@@ -13,7 +13,8 @@ firebase.auth().onAuthStateChanged(function(user){
 	    $("#btnSubmit").click(function(){
 	    	var user_class = $("#select_year").val();
 	    	var user_dept = $("#select_depts").val();
-	    	var user_dept_id = $("#select_depts").attr("id");
+
+	    	var user_dept_id = $("#select_depts").children(":selected").attr("id");
 	    	
 	    	writeBasicUserData(user.uid, user.displayName, user_class, user_dept, user_dept_id);
 	    });

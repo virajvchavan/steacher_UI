@@ -97,6 +97,8 @@ userRef.child("skills").once("value", snap =>{
 					var user_skill_name = child_snapshot.key;
             
                     $("#skills_list").append("<a href=skill.html?id="+ user_skill_id +"><li class='list-group-item'>"+ user_skill_name +"</li></a>");
+
+                    $("#skills_modal").append(" <a href=skill.html?id="+ user_skill_id +"><span class='badge badge-success'>"+ user_skill_name +"</span></a> ");
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
@@ -110,6 +112,8 @@ userRef.child("subjects").once("value", snap =>{
 					var user_subject_name = child_snapshot.key;
             
                     $("#subjects_list").append("<a href=subject.html?id="+ user_subject_id +"><li class='list-group-item'>"+ user_subject_name +"</li></a>");
+
+                    $("#subjects_modal").append(" <a href=subject.html?id="+ user_subject_id +"><span class='badge badge-success'>"+ user_subject_name +"</span></a> ");
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
@@ -176,6 +180,15 @@ rootRef.child("subjects").once("value", snap =>{
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
+});
+
+//adding skills through modal form
+$("#submitSkillsBtn").click(function(){
+	var new_skill = $("#select_skills").val();
+	var new_skill_id= $("#select_skills").children(":selected").attr("id");
+
+	$("#skills_modal").append(" <a href=skill.html?id="+ new_skill_id +"><span class='badge badge-success'>"+ new_skill +"</span></a> ");
+
 });
 
 
