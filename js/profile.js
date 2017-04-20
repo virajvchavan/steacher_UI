@@ -8,7 +8,7 @@ function getQueryVariable(variable) {
     }
   }
 }
-
+$("#add_skills_to_project").hide();
 var uid  = getQueryVariable("id");
 
 firebase.auth().onAuthStateChanged(function(user){
@@ -114,7 +114,7 @@ userRef.child("skills").once("value", snap =>{
 });
 
 //show the user subjects
-userRef.child("subjects").on("value", snap =>{
+userRef.child("subjects").once("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_subject_id = child_snapshot.val();
@@ -129,7 +129,7 @@ userRef.child("subjects").on("value", snap =>{
 });
 
 //show the user projects
-userRef.child("projects").on("value", snap =>{
+userRef.child("projects").once("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_project_id = child_snapshot.val();
@@ -220,5 +220,116 @@ $("#submitSkillsBtn").click(function(){
 
 });
 
+
+//adding subjects through modal form
+$("#submitSubjectsBtn").click(function(){
+
+	//1. add subject to the logged in user
+	//2. add logged in user to the subject
+
+	var new_subject = $("#select_subjects").val();
+	var new_subject_id= $("#select_subjects").children(":selected").attr("id");
+
+	firebase.auth().onAuthStateChanged(function(user){
+
+	//add skill to the user
+	usersRef.child(user.uid).child("subjects").update({
+  				[new_subject]: new_subject_id
+  		     });
+
+	//add user to the skill
+	rootRef.child("subjects").child(new_subject_id).child("users").update({
+		[user.displayName]: user.uid
+	});
+
+	});
+
+	$("#subjects_list").append("<a href=subject.html?id="+ new_subject_id +"><li class='list-group-item'>"+ new_subject +"</li></a>");
+
+    $("#subjects_modal").append(" <a href=subject.html?id="+ new_subject_id +"><span class='badge badge-success'>"+ new_subject +"</span></a> ");
+
+});
+
+//add a project to db
+$("#submitProjectBtn").click(function(){
+	
+	//1. add all the basic data to the project
+	//2. add project to the logged in user
+
+	var project_name = $("#project_name").val();
+	var project_description = $("#project_description").val();
+	var github_link = $("#github_link").val();
+	var online_link = $("#online_link").val();
+
+	firebase.auth().onAuthStateChanged(function(user){
+		var project_id = writeUserProjects(user.uid, user.displayName, project_name, project_description, github_link, online_link);
+
+		$("#projects_list").append("<a href=project.html?id="+ project_id +"><li class='list-group-item'>"+ project_name +"</li></a>");
+
+		$("#new_project_id").val(project_id);
+		$("#new_project_name").val(project_name);
+
+	});
+
+	$("#add_project_form").hide();
+	$("#add_skills_to_project").show();
+
+
+
+});
+
+
+
+//add skills to a project
+$("#submitSkillsForProjectBtn").click(function(){
+	//1. add skill to the project
+	//2. add project to the skill
+
+	var new_skill = $("#select_skills_for_project").val();
+	var new_skill_id= $("#select_skills_for_project").children(":selected").attr("id");
+	var new_project_name = $("#new_project_name").val();
+	var new_project_id = $("#new_project_id").val();
+
+	firebase.auth().onAuthStateChanged(function(user){
+		//add skill to the project
+		rootRef.child("projects").child(new_project_id).child("skills").update({
+	  				[new_skill]: new_skill_id
+	  		     });
+
+		//add project to the skill
+		rootRef.child("skills").child(new_skill_id).child("projects").update({
+			[new_project_name]: new_project_id
+		});
+	});
+
+
+    $("#skills_in_project_modal").append(" <a href=skill.html?id="+ new_skill_id +"><span class='badge badge-success'>"+ new_skill +"</span></a> ");
+})
+
+
+
+
+//adding a new project
+function writeUserProjects(uid,user_name,projectName,projectInfo,projectGithub,projectLink) {
+			 var refForProjectDocument=firebase.database().ref('/projects').push();
+  			 refForProjectDocument.set({
+  				name: projectName,
+  		    	description: projectInfo,
+  		    	github:projectGithub,
+  		    	source_code: projectLink,
+  		    	users:{
+  		    		[user_name]: uid
+  		    	}
+  		     });
+			var projectId=refForProjectDocument.key;
+						
+			var ref=firebase.database().ref('users/'+uid+'/projects/');
+  			ref.update({
+  				[projectName] : projectId
+  		    });
+
+  		    return projectId;
+  		   
+}
 
 

@@ -183,7 +183,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -208,18 +207,17 @@
                     <!-- <option>CSS</option> -->
                   </select>
                 </div> &nbsp;
-                <input type="submit" id="submitSubjectsBtn" value="Add" class="btn btn-success" disabled="true">
+                <input type="button" id="submitSubjectsBtn" value="Add" class="btn btn-success">
               </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal: Add projects -->
+<!-- Modal: Add project -->
 <div class="modal fade bd-example-modal-lg" id="new_project" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -230,20 +228,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="add_project_form">
                 <div class="form-group">
                   <label for="project_name">Project Name</label>
                   <input type="text" class="form-control" id="project_name">
                 </div>
                 <div class="form-group">
                   <label for="project_description">Description</label>
-                  <textarea rows="10" class="form-control" id="project_description"></textarea>
-                </div>
-                <div class="form-group">
-                Skills: 
-                  <select id="select_skills_for_project" class="form-control">
-                    <!-- <option>CSS</option> -->
-                  </select>
+                  <textarea rows="7" class="form-control" id="project_description"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="github_link">GitHub Link</label>
@@ -254,13 +246,26 @@
                   <input type="text" class="form-control" id="online_link">
                 </div>
 
+                <input type="button" id="submitProjectBtn" value="Add" class="btn btn-success">
+              </form>
 
-                <input type="submit" id="submitProjectBtn" value="Add" class="btn btn-success" disabled="true">
+
+              <form id="add_skills_to_project" class="form-inline"><br>
+                  <input type="text" id="new_project_id" hidden="true">
+                  <input type="text" id="new_project_name" hidden="true"><hr> 
+                  <div>Which technologies/skills were used for this project?</div><br><br>
+                  <div id="skills_in_project_modal"><!-- <span class="badge badge-primary">HTML</span> --></div>
+                  <hr>
+                 <div class="form-group">
+                  <select id="select_skills_for_project" class="form-control">
+                    <!-- <option>CSS</option> -->
+                  </select>
+                </div> &nbsp;
+                <input type="button" id="submitSkillsForProjectBtn" value="Add" class="btn btn-success">
               </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

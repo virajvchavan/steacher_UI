@@ -35,7 +35,7 @@ if(project_id)
     					var id = child_snapshot.val();
     					var name = child_snapshot.key;
                 
-                        $("#skills_list").append("<a href=project.html?id="+ id +"><li class='list-group-item'>"+ name +"</li></a>");
+                        $("#skills_list").append("<a href=skill.html?id="+ id +"><li class='list-group-item'>"+ name +"</li></a>");
             
                         //<a href="skill.html"><li class="list-group-item">HTML</li></a>
     				});
