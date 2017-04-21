@@ -147,7 +147,7 @@
       <div class="card-block">
         <h4 class="card-title">Extra Curricular <button class="btn btn-primary profile_buttons" data-toggle="modal" data-target="#new_extra">Add</button></h4>
       </div>
-      <ul id="extra_cur_list" class="list-group list-group-flush">
+      <ul id="extra_curr_list" class="list-group list-group-flush">
       </ul>
     </div>
   </div>
@@ -164,7 +164,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add skills</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add skills to your profile</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -174,12 +174,28 @@
         <hr>
               <form class="form-inline">
                  <div class="form-group">
-                  <select id="select_skills" class="form-control">
+                  <select id="select_skills" class="form-control" required>
                     <!-- <option>CSS</option> -->
                   </select>
                 </div> &nbsp;
                 <input type="button" id="submitSkillsBtn" value="Add" class="btn btn-success">
               </form>
+              <hr>
+              <label class="custom-control custom-checkbox">
+                <input name="brand_new_skill" type="checkbox" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Click here if your skill is not mentioned above</span>
+              </label>
+              <form id="add_brand_new_skill_form"><br>                  
+                 <div class="form-group">
+                  <input type="text" id="brand_new_skill_text" class="form-control" placeholder="Skill Name" required>
+                </div>
+                <div class="form-group">
+                  <textarea type="text" id="brand_new_skill_description" class="form-control" cols="5" placeholder="Skill Description" required></textarea> 
+                </div> 
+                <input type="submit" id="addBrandNewSkillBtn" value="Add" class="btn btn-success">
+              </form>
+              
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -193,7 +209,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add subjects</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add subjects to your profile</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -203,11 +219,33 @@
         <hr>
               <form class="form-inline">
                  <div class="form-group">
-                  <select id="select_subjects" class="form-control">
+                  <select id="select_subjects" class="form-control" required>
                     <!-- <option>CSS</option> -->
                   </select>
-                </div> &nbsp;
-                <input type="button" id="submitSubjectsBtn" value="Add" class="btn btn-success">
+                </div> <br>
+                <input type="submit" id="submitSubjectsBtn" value="Add" class="btn btn-success">
+              </form>
+              <br>
+
+              <label class="custom-control custom-checkbox">
+                <input name="brand_new_subject" type="checkbox" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Click here if your subject is not mentioned above</span>
+              </label>
+              <form id="add_brand_new_subject_form"><br>                  
+                 <div class="form-group">
+                  <input type="text" id="brand_new_subject_text" class="form-control" placeholder="Subject Name" required>
+                </div>
+                <div class="form-group">
+                  <textarea type="text" id="brand_new_subject_description" class="form-control" cols="5" placeholder="Subject Description" required></textarea> 
+                </div>
+                <div class="form-group">
+                  <label for="dept">Department</label>
+                  <select id="select_depts" class="form-control" id="dept">
+                  <!--get from firebase (<option>IT</option>)  -->
+                  </select>
+                </div> 
+                <input type="submit" id="addBrandNewSubjectBtn" value="Add" class="btn btn-success">
               </form>
       </div>
       <div class="modal-footer">
@@ -231,11 +269,11 @@
         <form id="add_project_form">
                 <div class="form-group">
                   <label for="project_name">Project Name</label>
-                  <input type="text" class="form-control" id="project_name">
+                  <input type="text" class="form-control" id="project_name" required>
                 </div>
                 <div class="form-group">
                   <label for="project_description">Description</label>
-                  <textarea rows="7" class="form-control" id="project_description"></textarea>
+                  <textarea rows="7" class="form-control" id="project_description" required></textarea>
                 </div>
                 <div class="form-group">
                   <label for="github_link">GitHub Link</label>
@@ -246,23 +284,38 @@
                   <input type="text" class="form-control" id="online_link">
                 </div>
 
-                <input type="button" id="submitProjectBtn" value="Add" class="btn btn-success">
-              </form>
+                <input type="submit" id="submitProjectBtn" value="Add" class="btn btn-success">
+          </form>
+              <div id="add_skills_to_project">
+                <div id="skills_in_project_modal"><!-- <span class="badge badge-primary">HTML</span> --></div><hr> 
+                <div>Which technologies/skills were used for this project?</div><br><br>
+                <form class="form-inline"><br>
+                    <input type="text" id="new_project_id" hidden="true">
+                    <input type="text" id="new_project_name" hidden="true">
 
-
-              <form id="add_skills_to_project" class="form-inline"><br>
-                  <input type="text" id="new_project_id" hidden="true">
-                  <input type="text" id="new_project_name" hidden="true"><hr> 
-                  <div>Which technologies/skills were used for this project?</div><br><br>
-                  <div id="skills_in_project_modal"><!-- <span class="badge badge-primary">HTML</span> --></div>
-                  <hr>
+                   <div class="form-group">
+                    <select id="select_skills_for_project" class="form-control">
+                      <!-- <option>CSS</option> -->
+                    </select>
+                  </div> &nbsp;
+                  <input type="submit" id="submitSkillsForProjectBtn" value="Add" class="btn btn-success">
+                </form>
+                <br>
+                <label class="custom-control custom-checkbox">
+                <input name="brand_new_skill_p" type="checkbox" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Click here if your skill is not mentioned above</span>
+              </label>
+              <form id="add_brand_new_skill_form_p"><br>                  
                  <div class="form-group">
-                  <select id="select_skills_for_project" class="form-control">
-                    <!-- <option>CSS</option> -->
-                  </select>
-                </div> &nbsp;
-                <input type="button" id="submitSkillsForProjectBtn" value="Add" class="btn btn-success">
+                  <input type="text" id="brand_new_skill_text_p" class="form-control" placeholder="Skill Name" required>
+                </div>
+                <div class="form-group">
+                  <textarea type="text" id="brand_new_skill_description_p" class="form-control" cols="5" placeholder="Skill Description" required></textarea> 
+                </div> 
+                <input type="submit" id="addBrandNewSkillBtn_p" value="Add" class="btn btn-success">
               </form>
+              </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -277,17 +330,23 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add an achievement</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add your achievements</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Body is here.
+       <div id="achievements_modal"><!-- <span class="badge badge-primary">HTML</span> --></div>
+                  <hr>
+        <form id="add_achievements" class="form-inline"><br>                  
+                 <div class="form-group">
+                  <input type="text" id="achievement_text" class="form-control" required>
+                </div> &nbsp;
+                <input type="submit" id="addAchievementBtn" value="Add" class="btn btn-success">
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -298,22 +357,27 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add an extra curricular activities</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add extra-curricular activities</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Body is here.
+        <div id="extra_curr_modal"><!-- <span class="badge badge-primary">HTML</span> --></div>
+                  <hr>
+        <form id="add_extra_curr" class="form-inline"><br>                  
+                 <div class="form-group">
+                  <input type="text" id="extra_curr_text" class="form-control" required>
+                </div> &nbsp;
+                <input type="submit" id="addExtraCurrBtn" value="Add" class="btn btn-success">
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
-
 
 </div><!-- main Container ends here-->
 

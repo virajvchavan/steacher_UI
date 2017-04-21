@@ -8,7 +8,12 @@ function getQueryVariable(variable) {
     }
   }
 }
+
 $("#add_skills_to_project").hide();
+$("form").submit(function(e){
+        e.preventDefault();
+    });
+
 var uid  = getQueryVariable("id");
 
 firebase.auth().onAuthStateChanged(function(user){
@@ -142,24 +147,28 @@ userRef.child("projects").once("value", snap =>{
 });
 
 //show the user achievements
-userRef.child("achievements").on("value", snap =>{
+userRef.child("achievements").once("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_achievement_name = child_snapshot.val();
             
                     $("#achievements_list").append("<li class='list-group-item'>"+ user_achievement_name +"</li>");
+
+                    $("#achievements_modal").append(" <span class='badge badge-success'> "+ user_achievement_name +" </span> ");
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
 });
 
 //show the user extra cur activities
-userRef.child("extra").on("value", snap =>{
+userRef.child("extra").once("value", snap =>{
     snap.forEach(function(child_snapshot)
 {
 					var user_achievement_name = child_snapshot.val();
             
-                    $("#extra_cur_list").append("<li class='list-group-item'>"+ user_achievement_name +"</li>");
+                    $("#extra_curr_list").append("<li class='list-group-item'>"+ user_achievement_name +"</li>");
+
+                    $("#extra_curr_modal").append(" <span class='badge badge-success'> "+ user_achievement_name +" </span> ");
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
@@ -189,6 +198,19 @@ rootRef.child("subjects").once("value", snap =>{
         
                     //<a href="skill.html"><li class="list-group-item">HTML</li></a>
 				});
+});
+
+//show the deoartments in select
+rootRef.child("departments").once("value", snap =>{
+    snap.forEach(function(child_snapshot)
+{
+                    var id = child_snapshot.key;
+                    var name = child_snapshot.child("name").val();
+        
+                    $("#select_depts").append("<option id='"+ id +"'>"+ name +"</option>")
+        
+                    //<a href="skill.html"><li class="list-group-item">HTML</li></a>
+                });
 });
 
 //adding skills through modal form
@@ -332,4 +354,193 @@ function writeUserProjects(uid,user_name,projectName,projectInfo,projectGithub,p
   		   
 }
 
+//add an achievement through modal form
+$("#addAchievementBtn").click(function(){
 
+	//1. add achievement to the logged in user
+
+	var achievement = $("#achievement_text").val();
+	$("#achievement_text").val("");
+
+	firebase.auth().onAuthStateChanged(function(user){
+
+	//add skill to the user
+	usersRef.child(user.uid).child("achievements").push(achievement);
+
+	});
+
+	$("#achievements_list").append("<li class='list-group-item'>"+ achievement +"</li>");
+
+    $("#achievements_modal").append(" <span class='badge badge-success'> "+ achievement +" </span> ");
+
+});
+
+
+//add an extra-curr through modal form
+$("#addExtraCurrBtn").click(function(){
+
+	//1. add achievement to the logged in user
+
+	var extra = $("#extra_curr_text").val();
+	$("#extra_curr_text").val("");
+
+	firebase.auth().onAuthStateChanged(function(user){
+
+	//add skill to the user
+	usersRef.child(user.uid).child("extra").push(extra);
+
+	});
+
+	$("#extra_curr_list").append("<li class='list-group-item'>"+ extra +"</li>");
+
+    $("#extra_curr_modal").append(" <span class='badge badge-success'> "+ extra +" </span> ");
+
+});
+
+$("#brand_new_skill").click(function(){
+	$("#add_brand_new_skill_form").show();
+})
+
+$('#add_brand_new_skill_form').hide();
+$('input[name="brand_new_skill"]').on('click', function(){
+    if ( $(this).is(':checked') ) {
+        $('#add_brand_new_skill_form').show();
+    } 
+    else {
+        $('#add_brand_new_skill_form').hide();
+    }
+});
+
+
+//add a skill if it doesn't exist in the list
+$("#addBrandNewSkillBtn").click(function(){
+	var brand_new_skill = $("#brand_new_skill_text").val();
+	var brand_new_skill_description = $("#brand_new_skill_description").val();
+
+	firebase.auth().onAuthStateChanged(function(user){
+		var brand_new_skill_ref = rootRef.child("skills").push();
+		brand_new_skill_ref.set({
+			name: brand_new_skill,
+			description: brand_new_skill_description, 
+			users: {
+				[user.displayName]: user.uid 
+			}
+		});
+
+		//add skill to the user
+		rootRef.child("users").child(user.uid).child("skills").update({
+  				[brand_new_skill]: brand_new_skill_ref.key
+  		     });
+
+		$("#skills_list").append("<a href=skill.html?id="+ brand_new_skill_ref.key +"><li class='list-group-item'>"+ brand_new_skill +"</li></a>");
+
+    	$("#skills_modal").append(" <a href=skill.html?id="+ brand_new_skill_ref.key +"><span class='badge badge-success'>"+ brand_new_skill +"</span></a> ");
+
+    	$('#add_brand_new_skill_form').hide();
+    	$("#brand_new_skill_text").val("");
+    	$("#brand_new_skill_description").val("");
+    	$('input[name="brand_new_skill"]').attr('checked', false);
+
+	});
+});
+
+
+
+$("#brand_new_skill_p").click(function(){
+	$("#add_brand_new_skill_form_p").show();
+})
+
+$('#add_brand_new_skill_form_p').hide();
+$('input[name="brand_new_skill_p"]').on('click', function(){
+    if ( $(this).is(':checked') ) {
+        $('#add_brand_new_skill_form_p').show();
+    } 
+    else {
+        $('#add_brand_new_skill_form_p').hide();
+    }
+});
+
+$("#addBrandNewSkillBtn_p").click(function(){
+	var brand_new_skill = $("#brand_new_skill_text_p").val();
+	var brand_new_skill_description = $("#brand_new_skill_description_p").val();
+
+	firebase.auth().onAuthStateChanged(function(user){
+		var brand_new_skill_ref = rootRef.child("skills").push();
+		brand_new_skill_ref.set({
+			name: brand_new_skill,
+			description: brand_new_skill_description, 
+			users: {
+				[user.displayName]: user.uid 
+			}
+		});
+
+		//add skill to the user
+		rootRef.child("users").child(user.uid).child("skills").update({
+  				[brand_new_skill]: brand_new_skill_ref.key
+  		     });
+
+    	$("#skills_in_project_modal").append(" <a href=skill.html?id="+ brand_new_skill_ref.key +"><span class='badge badge-success'>"+ brand_new_skill +"</span></a> ");
+
+    	$('#add_brand_new_skill_form_p').hide();
+    	$("#brand_new_skill_text_p").val("");
+    	$("#brand_new_skill_description_p").val("");
+    	$('input[name="brand_new_skill_p"]').attr('checked', false);
+
+	});
+
+	
+});
+
+
+$('#add_brand_new_subject_form').hide();
+$('input[name="brand_new_subject"]').on('click', function(){
+    if ( $(this).is(':checked') ) {
+        $('#add_brand_new_subject_form').show();
+    } 
+    else {
+        $('#add_brand_new_subject_form').hide();
+    }
+});
+
+
+//add a skill if it doesn't exist in the list
+$("#addBrandNewSubjectBtn").click(function(){
+	var brand_new_subject = $("#brand_new_subject_text").val();
+	var brand_new_subject_description = $("#brand_new_subject_description").val();
+	var subject_dept = $("#select_depts").val();
+	var subject_dept_id = $("#select_depts").children(":selected").attr("id");
+
+	firebase.auth().onAuthStateChanged(function(user){
+		var brand_new_subject_ref = rootRef.child("subjects").push();
+		brand_new_subject_ref.set({
+			name: brand_new_subject,
+			description: brand_new_subject_description, 
+			users: {
+				[user.displayName]: user.uid 
+			},
+			department: {
+				[subject_dept]: subject_dept_id
+			}
+		});
+
+		//add subject to the department
+		rootRef.child("departments").child(subject_dept_id).child("subjects").update({
+				[brand_new_subject]: brand_new_subject_ref.key
+			});
+
+		//add subject to the user
+		rootRef.child("users").child(user.uid).child("subjects").update({
+  				[brand_new_subject]: brand_new_subject_ref.key
+  		     });
+
+		$("#subjects_list").append("<a href=subject.html?id="+ brand_new_subject_ref.key +"><li class='list-group-item'>"+ brand_new_subject +"</li></a>");
+
+    	$("#subjects_modal").append(" <a href=subject.html?id="+ brand_new_subject_ref.key +"><span class='badge badge-success'>"+ brand_new_subject +"</span></a> ");
+
+    	$('#add_brand_new_subject_form').hide();
+    	$("#brand_new_subject_text").val("");
+    	$("#brand_new_subject_description").val("");
+    	$('input[name="brand_new_subject"]').attr('checked', false);
+
+	});
+});
