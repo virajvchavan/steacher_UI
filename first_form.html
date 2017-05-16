@@ -17,11 +17,31 @@
 	<br>
 	<form>
 		<div class="form-group">
+			<label class="custom-control custom-radio">
+			  <input value="student" id="student" checked="true" name="role" type="radio" class="custom-control-input">
+			  <span class="custom-control-indicator"></span>
+			  <span class="custom-control-description">Student</span>
+			</label>
+			<label class="custom-control custom-radio">
+			  <input value="teacher" id="teacher" name="role" type="radio" class="custom-control-input">
+			  <span class="custom-control-indicator"></span>
+			  <span class="custom-control-description">Teacher</span>
+			</label>
+        </div>
+		<div class="form-group">
 			<label for="full_name">Full Name</label>
 			<input type="text" class="form-control" id="full_name" name="full_name" disabled="true">
 		</div>
+
 		<div class="form-group">
-	    <label for="year">Year</label>
+	    	<label for="dept">Department</label>
+		    <select id="select_depts" class="form-control" id="dept">
+		    <!--get from firebase (<option>IT</option>)  -->
+		    </select>
+	    </div>
+
+		<div class="form-group" id="div_year">
+	   		<label for="year">Year</label>
 		    <select id="select_year" class="form-control" id="year">
 		      <option>1st Year</option>
 		      <option>2nd Year</option>
@@ -30,12 +50,13 @@
 		    </select>
 	    </div>
 
-	    <div class="form-group">
-	    <label for="dept">Department</label>
-		    <select id="select_depts" class="form-control" id="dept">
-		    <!--get from firebase (<option>IT</option>)  -->
-		    </select>
-	    </div>
+	    
+	    <div class="form-group" id="div_prn">
+			<label for="prn">Roll Number</label>
+			<input type="text" class="form-control" id="prn" name="prn" maxlength="15">
+		</div>
+
+
 		<button id="btnSubmit" class="btn btn-default">Submit</button>
 	</form>
 </div>

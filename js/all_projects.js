@@ -8,7 +8,7 @@ projectsRef.once("value", snap =>{
 		var name = child_snapshot.child("name").val();
 	    var description = child_snapshot.child("description").val();
 
-	    $("#all_projects").append('<div class="card card-inverse" style="background-color: #333; border-color: #333;"><div class="card-block"><a href="project.html?id='+ id +'"><h3 class="card-title">'+ name +'</h3></a><p id="'+  id +'" class="card-text">'+ description + '<br>');
+	    $("#all_projects").append('<div class="card card-inverse" style="background-color: #333; border-color: #333;"><div class="card-block"><a href="project.html?id='+ id +'"><h3 class="card-title">'+ name +'</h3></a><p id="'+  id +'" class="card-text">'+ description + '<br>666666');
 
 	    //show the skills
 		child_snapshot.child("skills").forEach(function(skills_snapshot)

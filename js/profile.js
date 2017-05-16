@@ -87,6 +87,25 @@ firebase.auth().onAuthStateChanged(function(user){
 			var user_name = snap.child("name").val();
 			var user_email = snap.child("email").val();
 
+
+			if(snap.hasChild("role"))
+			{
+				var user_role = snap.child("role").val();
+			}
+			else
+			{
+				var user_role = "student";
+			}
+
+			if(user_role != "teacher")
+			{
+				$("#teacher_area").hide();
+			}
+			else{
+				$("#user_class").hide();
+			}
+			
+
 			$("#num_projects").text("Projects: " + num_projects);
 			$("#num_skills").text("Skills: " + num_skills);
 			$("#user_email").text(user_email);
@@ -254,12 +273,12 @@ $("#submitSubjectsBtn").click(function(){
 
 	firebase.auth().onAuthStateChanged(function(user){
 
-	//add skill to the user
+	//add subject to the user
 	usersRef.child(user.uid).child("subjects").update({
   				[new_subject]: new_subject_id
   		     });
 
-	//add user to the skill
+	//add user to the subject
 	rootRef.child("subjects").child(new_subject_id).child("users").update({
 		[user.displayName]: user.uid
 	});
@@ -364,7 +383,7 @@ $("#addAchievementBtn").click(function(){
 
 	firebase.auth().onAuthStateChanged(function(user){
 
-	//add skill to the user
+	//add achievement to the user
 	usersRef.child(user.uid).child("achievements").push(achievement);
 
 	});
@@ -386,7 +405,7 @@ $("#addExtraCurrBtn").click(function(){
 
 	firebase.auth().onAuthStateChanged(function(user){
 
-	//add skill to the user
+	//add ectra_curr to the user
 	usersRef.child(user.uid).child("extra").push(extra);
 
 	});
@@ -416,11 +435,13 @@ $('input[name="brand_new_skill"]').on('click', function(){
 $("#addBrandNewSkillBtn").click(function(){
 	var brand_new_skill = $("#brand_new_skill_text").val();
 	var brand_new_skill_description = $("#brand_new_skill_description").val();
+	var lower_skill_name = brand_new_skill.toLowerCase();
 
 	firebase.auth().onAuthStateChanged(function(user){
 		var brand_new_skill_ref = rootRef.child("skills").push();
 		brand_new_skill_ref.set({
 			name: brand_new_skill,
+			lower_name: lower_skill_name,
 			description: brand_new_skill_description, 
 			users: {
 				[user.displayName]: user.uid 
@@ -463,11 +484,13 @@ $('input[name="brand_new_skill_p"]').on('click', function(){
 $("#addBrandNewSkillBtn_p").click(function(){
 	var brand_new_skill = $("#brand_new_skill_text_p").val();
 	var brand_new_skill_description = $("#brand_new_skill_description_p").val();
+	var lower_skill_name = brand_new_skill.toLowerCase();
 
 	firebase.auth().onAuthStateChanged(function(user){
 		var brand_new_skill_ref = rootRef.child("skills").push();
 		brand_new_skill_ref.set({
 			name: brand_new_skill,
+			lower_name: lower_skill_name,
 			description: brand_new_skill_description, 
 			users: {
 				[user.displayName]: user.uid 
@@ -510,10 +533,13 @@ $("#addBrandNewSubjectBtn").click(function(){
 	var subject_dept = $("#select_depts").val();
 	var subject_dept_id = $("#select_depts").children(":selected").attr("id");
 
+	var lower_subject = brand_new_skill.toLowerCase();
+
 	firebase.auth().onAuthStateChanged(function(user){
 		var brand_new_subject_ref = rootRef.child("subjects").push();
 		brand_new_subject_ref.set({
 			name: brand_new_subject,
+			lower_name: lower_subject,
 			description: brand_new_subject_description, 
 			users: {
 				[user.displayName]: user.uid 

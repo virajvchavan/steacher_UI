@@ -20,6 +20,7 @@ firebase.auth().onAuthStateChanged(function(user){
 		window.location = "login.html";
 	});
 
+
 function getQueryVariable(variable) {
   var query = window.location.search.substring(1);
   var vars = query.split("&");
@@ -30,5 +31,7 @@ function getQueryVariable(variable) {
     }
   }
 }
+
+
 
     

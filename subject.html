@@ -54,8 +54,18 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+      <input id="search_value" class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button id="submit_button" class="btn btn-success my-2 my-sm-0" type="submit" onclick="search()">Search</button>
+
+      <script type="text/javascript">
+        function search()
+        {
+           var key = $("#search_value").val();
+
+           window.location = "search.html?s="+key;
+        }        
+      </script>
+
     </form>
   </div>
 </nav>

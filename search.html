@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <title id="page_title"> | Steacher</title>
+  <title>Steacher</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
     <style type="text/css">
       .card{
         margin-bottom: 20px;
       }
-	#disqus_thread{
-		padding: 60px;	
-	}
     </style>
   </head>
   <body>
@@ -30,8 +28,8 @@
       <li class="nav-item">
         <a id="profile_link" class="nav-link" href="#">Profile</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="all_projects.html">Projects <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="all_projects.html">Projects</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="all_skills.html">Skills</a>
@@ -43,10 +41,10 @@
         <a class="nav-link" href="all_subjects.html">Subjects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" id="logout_button">Logout(<span id="user_name"></span>)</a>
+        <a class="nav-link" id="logout_button" hidden="true">Logout(<span id="user_name"></span>)</a>
       </li>
       <li class="nav-item">
-        <a class="btn btn-success" id="login_button">Login</a>
+      <a class="btn btn-success" id="login_button">Login</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -67,23 +65,16 @@
 </nav>
 
 <div class="container">
-  <br>
-  <div class="card card-inverse" style="background-color: #333; border-color: #333;">
-    <div class="card-block">
-        <h3 id="project_name" class="card-title" style="font-size: 45px;"></h3>
-        <p id="project_description" class="card-text"></p>
-        <button id="online_link" class="btn btn-primary btn-sm">View Online</button> &nbsp;&nbsp;&nbsp;
-        <button id="source_code" class="btn btn-primary btn-sm">Source Code</button>  
-    </div>
-  </div>
 
-<div class="row">
+<br><br>
+  <div class="row">
   <div class="col">
     <div class="card card-warning" style="width: 20rem;">
       <div class="card-block">
-        <h4 class="card-title">Developers</h4>
+        <h4 class="card-title">Skills</h4>
       </div>
-      <ul id="users_list" class="list-group list-group-flush">
+      <ul id="skills_list" class="list-group list-group-flush">
+        <!--<a href="skill.html"><li class="list-group-item">HTML</li></a>-->
       </ul>
     </div>
   </div>
@@ -91,25 +82,58 @@
   <div class="col">
     <div class="card card-success" style="width: 20rem;">
       <div class="card-block">
-        <h4 class="card-title">Technologies Used</h4>
+        <h4 class="card-title">Academic Subjects </h4>
       </div>
-      <ul id = "skills_list" class="list-group list-group-flush">
-
+      <ul id="subjects_list" class="list-group list-group-flush">
+      <!--  <a href="subject.html"><li class="list-group-item">Data Structures</li></a> -->
       </ul>
     </div>
   </div>
 
   <div class="col">
-
+    <div class="card card-danger" style="width: 20rem;">
+      <div class="card-block">
+        <h4 class="card-title">Projects </h4>
+      </div>
+      <ul id="projects_list" class="list-group list-group-flush">
+        
+      </ul>
+    </div>
   </div>
 
-</div><!--The row ends here-->
-<br>
+</div>
 
+<!-- 2nd row here-->
+<div class="row">
+  <div class="col">
+    <div class="card card-success" style="width: 20rem;">
+      <div class="card-block">
+        <h4 class="card-title">Students </h4>
+      </div>
+      <ul id="students_list" class="list-group list-group-flush"> 
+      </ul>
+    </div>
+  </div>
 
-</div><!-- main Container ends here-->
+  <div class="col">
+    <div class="card card-danger" style="width: 20rem;">
+      <div class="card-block">
+        <h4 class="card-title">Teachers </h4>
+      </div>
+      <ul id="teachers_list" class="list-group list-group-flush">
+      </ul>
+    </div>
+  </div>
 
-          <script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
+  <div class="col">
+  </div>
+
+</div>
+<!-- 2nd row ends here-->
+
+</div>
+
+  <script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
     <script>
       // Initialize Firebase
       var config = {
@@ -124,20 +148,16 @@
     </script>
     <script src="js/jquery-3.1.1.slim.min.js"></script>
     <script src="js/login.js" type="text/javascript"></script>
-    <script src="js/project.js" type="text/javascript"></script>
 
+    <script src="js/search.js" type="text/javascript"></script>
+   
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="js/tether.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-<div id="disqus_thread"></div>
-</div>
-<script>
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://steacher.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
+    <script src="js/bootstrap.min.js"</script>
+
+    <!-- For Firebase -->
+    
+    
+
   </body>
 </html>

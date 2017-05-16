@@ -31,7 +31,7 @@ deptsRef.child(dept_id).child("users").once("value", snap =>{
 					var id = child_snapshot.val();
 					var name = child_snapshot.key;
             
-                    $("#users_list").append("<a href=project.html?id="+ id +"><li class='list-group-item'>"+ name +"</li></a>");
+                    $("#users_list").append("<a href=profile.html?id="+ id +"><li class='list-group-item'>"+ name +"</li></a>");
         
 				});
 });
@@ -43,7 +43,7 @@ deptsRef.child(dept_id).child("subjects").once("value", snap =>{
 					var id = child_snapshot.val();
 					var name = child_snapshot.key;
             
-                    $("#subjects_list").append("<a href=profile.html?id="+ id +"><li class='list-group-item'>"+ name +"</li></a>");
+                    $("#subjects_list").append("<a href='subject.html?id="+ id +"'><li class='list-group-item'>"+ name +"</li></a>");
         
 				});
 });

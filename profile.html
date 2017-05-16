@@ -63,8 +63,18 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+      <input id="search_value" class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button id="submit_button" class="btn btn-success my-2 my-sm-0" type="submit" onclick="search()">Search</button>
+
+      <script type="text/javascript">
+        function search()
+        {
+           var key = $("#search_value").val();
+
+           window.location = "search.html?s="+key;
+        }        
+      </script>
+
     </form>
   </div>
 </nav>
@@ -77,6 +87,10 @@
     <img src="images/placeholder.png" class="float-left" id="profile-picture">
     <div id="profile-text">
       <h3 id="user_display_name" class="card-title"></h3>
+      <div id="teacher_area">
+        <h5>Teacher</h5>
+        <a href="teacher.html" class="btn btn-primary btn-large pull-right">Teacher Area</a>
+      </div>
       <p class="card-text"><span id="user_class"></span>  <a id="user_dept" href='#'></a></p>
       <span id="num_projects" class="badge badge-success" id="count">Projects: </span> &nbsp;&nbsp;&nbsp;&nbsp;
         <span  id="num_skills" class="badge badge-success" id="count">Skills: </span>
